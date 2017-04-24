@@ -1,0 +1,88 @@
+package set // import "kkn.fi/set"
+
+// {{.TypeName}} implements a set data structure that holds {{.Type}}s.
+type {{.TypeName}} struct {
+	m map[{{.Type}}]struct{}
+}
+
+// New{{.ShortTypeName}} creates a set of {{.Type}}s initialized with given values.
+func New{{.ShortTypeName}}(values ...{{.Type}}) *{{.TypeName}} {
+	s := &{{.TypeName}}{}
+	s.m = make(map[{{.Type}}]struct{})
+	s.Add(values...)
+	return s
+}
+
+// Add adds given values to the set.
+func (s *{{.TypeName}}) Add(values ...{{.Type}}) {
+	if len(values) == 0 {
+		return
+	}
+	for _, value := range values {
+		s.m[value] = valueExists
+	}
+}
+
+// Contains returns true if set holds all values and false otherwise.
+func (s {{.TypeName}}) Contains(values ...{{.Type}}) bool {
+	if len(values) == 0 {
+		return false
+	}
+	for _, value := range values {
+		if _, has := s.m[value]; !has {
+			return false
+		}
+	}
+	return true
+}
+
+// Remove removes given values from the set.
+func (s *{{.TypeName}}) Remove(values ...{{.Type}}) {
+	if len(values) == 0 {
+		return
+	}
+	for _, value := range values {
+		delete(s.m, value)
+	}
+}
+
+// Clear removes all values from the set.
+func (s *{{.TypeName}}) Clear() {
+	s.m = make(map[{{.Type}}]struct{})
+}
+
+// ForEach iterates through the set and visits all values with function f.
+// Iteration will stop if function f returns false.
+// ForEach will return false when set is visited partially.
+func (s *{{.TypeName}}) ForEach(f func(value {{.Type}}) bool) bool {
+	for v := range s.m {
+		if !f(v) {
+			return false
+		}
+	}
+	return true
+}
+
+// Copy returns a copy of the set.
+func (s {{.TypeName}}) Copy() *{{.TypeName}} {
+	return New{{.ShortTypeName}}(s.Slice()...)
+}
+
+// Slice returns a slice of {{.Type}}s copied from the set contents.
+func (s {{.TypeName}}) Slice() []{{.Type}} {
+	result := make([]{{.Type}}, 0, len(s.m))
+	for value := range s.m {
+		result = append(result, value)
+	}
+	return result
+}
+
+// Len returns the size of the set.
+func (s {{.TypeName}}) Len() int {
+	return len(s.m)
+}
+
+// IsEmpty return true is set is empty, false otherwise.
+func (s {{.TypeName}}) IsEmpty() bool {
+	return len(s.m) == 0
+}
