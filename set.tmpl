@@ -96,6 +96,16 @@ func (s {{.TypeName}}) IsSuperset(other *{{.TypeName}}) bool {
 	return other.IsSubset(&s)
 }
 
+// Union returns a new union set of s and other.
+func (s {{.TypeName}}) Union(other *{{.TypeName}}) *{{.TypeName}} {
+	result := s.Copy()
+	other.Visit(func(value {{.Type}}) bool {
+		result.Add(value)
+		return true
+	})
+	return result
+}
+
 // Slice returns a slice of {{.Type}}s copied from the set contents.
 func (s {{.TypeName}}) Slice() []{{.Type}} {
 	result := make([]{{.Type}}, 0, len(s.m))

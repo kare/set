@@ -96,6 +96,16 @@ func (s StringSet) IsSuperset(other *StringSet) bool {
 	return other.IsSubset(&s)
 }
 
+// Union returns an union set of s and other.
+func (s StringSet) Union(other *StringSet) *StringSet {
+	result := s.Copy()
+	other.Visit(func(value string) bool {
+		result.Add(value)
+		return true
+	})
+	return result
+}
+
 // Slice returns a slice of strings copied from the set contents.
 func (s StringSet) Slice() []string {
 	result := make([]string, 0, len(s.m))

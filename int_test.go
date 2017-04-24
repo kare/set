@@ -122,6 +122,16 @@ func TestIntIsSuperset(t *testing.T) {
 	}
 }
 
+func TestIntUnion(t *testing.T) {
+	a := set.NewInt(1, 3, 5, 7)
+	b := set.NewInt(1, 2, 4, 6)
+	c := a.Union(b)
+	expected := set.NewInt(1, 2, 3, 4, 5, 6, 7)
+	if !c.Equals(expected) {
+		t.Errorf("expected set to equal %v", expected)
+	}
+}
+
 func TestIntSlice(t *testing.T) {
 	s := set.NewInt(1, 2, 3)
 	slice := s.Slice()
