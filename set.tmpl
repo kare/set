@@ -68,6 +68,19 @@ func (s {{.TypeName}}) Copy() *{{.TypeName}} {
 	return New{{.ShortTypeName}}(s.Slice()...)
 }
 
+// Equals returns true if both sets are equal, but false otherwise.
+func (s {{.TypeName}}) Equals(other *{{.TypeName}}) bool {
+	if s.Len() != other.Len() {
+		return false
+	}
+	e := true
+	other.Visit(func(value {{.Type}}) bool {
+		_, e = s.m[value]
+		return e
+	})
+	return e
+}
+
 // Slice returns a slice of {{.Type}}s copied from the set contents.
 func (s {{.TypeName}}) Slice() []{{.Type}} {
 	result := make([]{{.Type}}, 0, len(s.m))

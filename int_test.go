@@ -88,6 +88,18 @@ func TestIntCopy(t *testing.T) {
 	}
 }
 
+func TestIntEquals(t *testing.T) {
+	a := set.NewInt(1, 2, 3)
+	b := set.NewInt(1, 2, 3)
+	if !a.Equals(b) {
+		t.Error("expected equality")
+	}
+	c := set.NewInt(4, 5, 6)
+	if a.Equals(c) {
+		t.Error("sets are not equal")
+	}
+}
+
 func TestIntSlice(t *testing.T) {
 	s := set.NewInt(1, 2, 3)
 	slice := s.Slice()
