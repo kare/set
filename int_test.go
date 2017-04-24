@@ -100,6 +100,28 @@ func TestIntEquals(t *testing.T) {
 	}
 }
 
+func TestIntIsSubset(t *testing.T) {
+	a := set.NewInt(1, 2, 3, 4)
+	b := set.NewInt(1, 2, 3)
+	if !b.IsSuperset(a) {
+		t.Error("a is a superset of b")
+	}
+	if a.IsSuperset(b) {
+		t.Error("b is not a superset of a")
+	}
+}
+
+func TestIntIsSuperset(t *testing.T) {
+	a := set.NewInt(1, 2, 3, 4)
+	b := set.NewInt(1, 2, 3)
+	if !a.IsSubset(b) {
+		t.Error("a is a subset of b")
+	}
+	if b.IsSubset(a) {
+		t.Error("b is not a subset of a")
+	}
+}
+
 func TestIntSlice(t *testing.T) {
 	s := set.NewInt(1, 2, 3)
 	slice := s.Slice()

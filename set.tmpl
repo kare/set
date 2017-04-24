@@ -81,6 +81,21 @@ func (s {{.TypeName}}) Equals(other *{{.TypeName}}) bool {
 	return e
 }
 
+// IsSubset returns true if given set is a subset of s.
+func (s {{.TypeName}}) IsSubset(other *{{.TypeName}}) bool {
+	result := true
+	other.Visit(func(value {{.Type}}) bool {
+		_, result = s.m[value]
+		return result
+	})
+	return result
+}
+
+// IsSuperset returns true if given set is a superset of s.
+func (s {{.TypeName}}) IsSuperset(other *{{.TypeName}}) bool {
+	return other.IsSubset(&s)
+}
+
 // Slice returns a slice of {{.Type}}s copied from the set contents.
 func (s {{.TypeName}}) Slice() []{{.Type}} {
 	result := make([]{{.Type}}, 0, len(s.m))
