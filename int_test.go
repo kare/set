@@ -68,6 +68,26 @@ func TestIntClear(t *testing.T) {
 	}
 }
 
+func TestIntVisit(t *testing.T) {
+	s := set.NewInt(1, 2, 3)
+	result := make([]int, 0)
+	s.Visit(func(i int) bool {
+		result = append(result, i)
+		return true
+	})
+	if len(result) != 3 {
+		t.Errorf("expected to visit 3 values, but got %d", len(result))
+	}
+}
+
+func TestIntCopy(t *testing.T) {
+	s := set.NewInt(1, 2, 3)
+	copy := s.Copy()
+	if copy.Len() != 3 {
+		t.Errorf("expected set len 3, but got %d", copy.Len())
+	}
+}
+
 func TestIntSlice(t *testing.T) {
 	s := set.NewInt(1, 2, 3)
 	slice := s.Slice()

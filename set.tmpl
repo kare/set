@@ -51,10 +51,10 @@ func (s *{{.TypeName}}) Clear() {
 	s.m = make(map[{{.Type}}]struct{})
 }
 
-// ForEach iterates through the set and visits all values with function f.
+// Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
-// ForEach will return false when set is visited partially.
-func (s *{{.TypeName}}) ForEach(f func(value {{.Type}}) bool) bool {
+// Visit will return false when set is visited partially.
+func (s {{.TypeName}}) Visit(f func(value {{.Type}}) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
