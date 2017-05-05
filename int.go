@@ -96,7 +96,7 @@ func (s IntSet) IsSuperset(other *IntSet) bool {
 	return other.IsSubset(&s)
 }
 
-// Union returns an union set of s and other.
+// Union returns a new union set of s and other.
 func (s IntSet) Union(other *IntSet) *IntSet {
 	result := s.Copy()
 	other.Visit(func(value int) bool {
