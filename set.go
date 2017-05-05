@@ -1,5 +1,5 @@
 package set // import "kkn.fi/set"
 
-//go:generate genset
+//go:generate gends templates.json set.tmpl
 
 var valueExists = struct{}{}
