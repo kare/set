@@ -1,1 +1,87 @@
-[{"ShortTypeName":"String","TypeName":"StringSet","Type":"string"},{"ShortTypeName":"Int","TypeName":"IntSet","Type":"int"},{"ShortTypeName":"Uint","TypeName":"UintSet","Type":"uint"},{"ShortTypeName":"Uint8","TypeName":"Uint8Set","Type":"uint8"},{"ShortTypeName":"Uint16","TypeName":"Uint16Set","Type":"uint16"},{"ShortTypeName":"Uint32","TypeName":"Uint32Set","Type":"uint32"},{"ShortTypeName":"Uint64","TypeName":"Uint64Set","Type":"uint64"},{"ShortTypeName":"Int8","TypeName":"Int8Set","Type":"int8"},{"ShortTypeName":"Int16","TypeName":"Int16Set","Type":"int16"},{"ShortTypeName":"Int32","TypeName":"Int32Set","Type":"int32"},{"ShortTypeName":"Int64","TypeName":"Int64Set","Type":"int64"},{"ShortTypeName":"Float32","TypeName":"Float32Set","Type":"float32"},{"ShortTypeName":"Float64","TypeName":"Float64Set","Type":"float64"},{"ShortTypeName":"Complex64","TypeName":"Complex64Set","Type":"complex64"},{"ShortTypeName":"Complex128","TypeName":"Complex128Set","Type":"complex128"},{"ShortTypeName":"Byte","TypeName":"ByteSet","Type":"byte"},{"ShortTypeName":"Rune","TypeName":"RuneSet","Type":"rune"}]
+[
+    {
+        "ShortTypeName": "String",
+        "Type": "string",
+        "TypeName": "StringSet"
+    },
+    {
+        "ShortTypeName": "Int",
+        "Type": "int",
+        "TypeName": "IntSet"
+    },
+    {
+        "ShortTypeName": "Uint",
+        "Type": "uint",
+        "TypeName": "UintSet"
+    },
+    {
+        "ShortTypeName": "Uint8",
+        "Type": "uint8",
+        "TypeName": "Uint8Set"
+    },
+    {
+        "ShortTypeName": "Uint16",
+        "Type": "uint16",
+        "TypeName": "Uint16Set"
+    },
+    {
+        "ShortTypeName": "Uint32",
+        "Type": "uint32",
+        "TypeName": "Uint32Set"
+    },
+    {
+        "ShortTypeName": "Uint64",
+        "Type": "uint64",
+        "TypeName": "Uint64Set"
+    },
+    {
+        "ShortTypeName": "Int8",
+        "Type": "int8",
+        "TypeName": "Int8Set"
+    },
+    {
+        "ShortTypeName": "Int16",
+        "Type": "int16",
+        "TypeName": "Int16Set"
+    },
+    {
+        "ShortTypeName": "Int32",
+        "Type": "int32",
+        "TypeName": "Int32Set"
+    },
+    {
+        "ShortTypeName": "Int64",
+        "Type": "int64",
+        "TypeName": "Int64Set"
+    },
+    {
+        "ShortTypeName": "Float32",
+        "Type": "float32",
+        "TypeName": "Float32Set"
+    },
+    {
+        "ShortTypeName": "Float64",
+        "Type": "float64",
+        "TypeName": "Float64Set"
+    },
+    {
+        "ShortTypeName": "Complex64",
+        "Type": "complex64",
+        "TypeName": "Complex64Set"
+    },
+    {
+        "ShortTypeName": "Complex128",
+        "Type": "complex128",
+        "TypeName": "Complex128Set"
+    },
+    {
+        "ShortTypeName": "Byte",
+        "Type": "byte",
+        "TypeName": "ByteSet"
+    },
+    {
+        "ShortTypeName": "Rune",
+        "Type": "rune",
+        "TypeName": "RuneSet"
+    }
+]
