@@ -7,8 +7,8 @@ type {{.TypeName}} struct {
 	m map[{{.Type}}]struct{}
 }
 
-// New{{.ShortTypeName}} creates a set of {{.Type}}s initialized with given values.
-func New{{.ShortTypeName}}(values ...{{.Type}}) *{{.TypeName}} {
+// New{{.TypeName}} creates a set of {{.Type}}s initialized with given values.
+func New{{.TypeName}}(values ...{{.Type}}) *{{.TypeName}} {
 	s := &{{.TypeName}}{}
 	s.m = make(map[{{.Type}}]struct{})
 	s.Add(values...)
@@ -67,7 +67,7 @@ func (s *{{.TypeName}}) Visit(f func(value {{.Type}}) bool) bool {
 
 // Copy returns a copy of the set.
 func (s *{{.TypeName}}) Copy() *{{.TypeName}} {
-	return New{{.ShortTypeName}}(s.Slice()...)
+	return New{{.TypeName}}(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
