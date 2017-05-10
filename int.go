@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// IntSet implements a set data structure that holds ints.
-type IntSet struct {
+// Int implements a set data structure that holds ints.
+type Int struct {
 	m map[int]struct{}
 }
 
 // NewInt creates a set of ints initialized with given values.
-func NewInt(values ...int) *IntSet {
-	s := &IntSet{}
+func NewInt(values ...int) *Int {
+	s := &Int{}
 	s.m = make(map[int]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *IntSet) Add(values ...int) {
+func (s *Int) Add(values ...int) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *IntSet) Add(values ...int) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *IntSet) Contains(values ...int) bool {
+func (s *Int) Contains(values ...int) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *IntSet) Contains(values ...int) bool {
 }
 
 // Remove removes given values from the set.
-func (s *IntSet) Remove(values ...int) {
+func (s *Int) Remove(values ...int) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *IntSet) Remove(values ...int) {
 }
 
 // Clear removes all values from the set.
-func (s *IntSet) Clear() {
+func (s *Int) Clear() {
 	s.m = make(map[int]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *IntSet) Visit(f func(value int) bool) bool {
+func (s *Int) Visit(f func(value int) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *IntSet) Visit(f func(value int) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *IntSet) Copy() *IntSet {
+func (s *Int) Copy() *Int {
 	return NewInt(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *IntSet) Equals(other *IntSet) bool {
+func (s *Int) Equals(other *Int) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *IntSet) Equals(other *IntSet) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *IntSet) IsSubset(other *IntSet) bool {
+func (s *Int) IsSubset(other *Int) bool {
 	result := true
 	other.Visit(func(value int) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *IntSet) IsSubset(other *IntSet) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *IntSet) IsSuperset(other *IntSet) bool {
+func (s *Int) IsSuperset(other *Int) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *IntSet) Union(other *IntSet) *IntSet {
+func (s *Int) Union(other *Int) *Int {
 	result := s.Copy()
 	other.Visit(func(value int) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *IntSet) Union(other *IntSet) *IntSet {
 }
 
 // Slice returns a slice of ints copied from the set contents.
-func (s *IntSet) Slice() []int {
+func (s *Int) Slice() []int {
 	result := make([]int, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *IntSet) Slice() []int {
 }
 
 // Len returns the size of the set.
-func (s *IntSet) Len() int {
+func (s *Int) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *IntSet) IsEmpty() bool {
+func (s *Int) IsEmpty() bool {
 	return len(s.m) == 0
 }

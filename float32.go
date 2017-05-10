@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// Float32Set implements a set data structure that holds float32s.
-type Float32Set struct {
+// Float32 implements a set data structure that holds float32s.
+type Float32 struct {
 	m map[float32]struct{}
 }
 
 // NewFloat32 creates a set of float32s initialized with given values.
-func NewFloat32(values ...float32) *Float32Set {
-	s := &Float32Set{}
+func NewFloat32(values ...float32) *Float32 {
+	s := &Float32{}
 	s.m = make(map[float32]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *Float32Set) Add(values ...float32) {
+func (s *Float32) Add(values ...float32) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *Float32Set) Add(values ...float32) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *Float32Set) Contains(values ...float32) bool {
+func (s *Float32) Contains(values ...float32) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *Float32Set) Contains(values ...float32) bool {
 }
 
 // Remove removes given values from the set.
-func (s *Float32Set) Remove(values ...float32) {
+func (s *Float32) Remove(values ...float32) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *Float32Set) Remove(values ...float32) {
 }
 
 // Clear removes all values from the set.
-func (s *Float32Set) Clear() {
+func (s *Float32) Clear() {
 	s.m = make(map[float32]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *Float32Set) Visit(f func(value float32) bool) bool {
+func (s *Float32) Visit(f func(value float32) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *Float32Set) Visit(f func(value float32) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *Float32Set) Copy() *Float32Set {
+func (s *Float32) Copy() *Float32 {
 	return NewFloat32(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *Float32Set) Equals(other *Float32Set) bool {
+func (s *Float32) Equals(other *Float32) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *Float32Set) Equals(other *Float32Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *Float32Set) IsSubset(other *Float32Set) bool {
+func (s *Float32) IsSubset(other *Float32) bool {
 	result := true
 	other.Visit(func(value float32) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *Float32Set) IsSubset(other *Float32Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *Float32Set) IsSuperset(other *Float32Set) bool {
+func (s *Float32) IsSuperset(other *Float32) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *Float32Set) Union(other *Float32Set) *Float32Set {
+func (s *Float32) Union(other *Float32) *Float32 {
 	result := s.Copy()
 	other.Visit(func(value float32) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *Float32Set) Union(other *Float32Set) *Float32Set {
 }
 
 // Slice returns a slice of float32s copied from the set contents.
-func (s *Float32Set) Slice() []float32 {
+func (s *Float32) Slice() []float32 {
 	result := make([]float32, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *Float32Set) Slice() []float32 {
 }
 
 // Len returns the size of the set.
-func (s *Float32Set) Len() int {
+func (s *Float32) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *Float32Set) IsEmpty() bool {
+func (s *Float32) IsEmpty() bool {
 	return len(s.m) == 0
 }

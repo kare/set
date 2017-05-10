@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// Complex64Set implements a set data structure that holds complex64s.
-type Complex64Set struct {
+// Complex64 implements a set data structure that holds complex64s.
+type Complex64 struct {
 	m map[complex64]struct{}
 }
 
 // NewComplex64 creates a set of complex64s initialized with given values.
-func NewComplex64(values ...complex64) *Complex64Set {
-	s := &Complex64Set{}
+func NewComplex64(values ...complex64) *Complex64 {
+	s := &Complex64{}
 	s.m = make(map[complex64]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *Complex64Set) Add(values ...complex64) {
+func (s *Complex64) Add(values ...complex64) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *Complex64Set) Add(values ...complex64) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *Complex64Set) Contains(values ...complex64) bool {
+func (s *Complex64) Contains(values ...complex64) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *Complex64Set) Contains(values ...complex64) bool {
 }
 
 // Remove removes given values from the set.
-func (s *Complex64Set) Remove(values ...complex64) {
+func (s *Complex64) Remove(values ...complex64) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *Complex64Set) Remove(values ...complex64) {
 }
 
 // Clear removes all values from the set.
-func (s *Complex64Set) Clear() {
+func (s *Complex64) Clear() {
 	s.m = make(map[complex64]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *Complex64Set) Visit(f func(value complex64) bool) bool {
+func (s *Complex64) Visit(f func(value complex64) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *Complex64Set) Visit(f func(value complex64) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *Complex64Set) Copy() *Complex64Set {
+func (s *Complex64) Copy() *Complex64 {
 	return NewComplex64(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *Complex64Set) Equals(other *Complex64Set) bool {
+func (s *Complex64) Equals(other *Complex64) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *Complex64Set) Equals(other *Complex64Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *Complex64Set) IsSubset(other *Complex64Set) bool {
+func (s *Complex64) IsSubset(other *Complex64) bool {
 	result := true
 	other.Visit(func(value complex64) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *Complex64Set) IsSubset(other *Complex64Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *Complex64Set) IsSuperset(other *Complex64Set) bool {
+func (s *Complex64) IsSuperset(other *Complex64) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *Complex64Set) Union(other *Complex64Set) *Complex64Set {
+func (s *Complex64) Union(other *Complex64) *Complex64 {
 	result := s.Copy()
 	other.Visit(func(value complex64) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *Complex64Set) Union(other *Complex64Set) *Complex64Set {
 }
 
 // Slice returns a slice of complex64s copied from the set contents.
-func (s *Complex64Set) Slice() []complex64 {
+func (s *Complex64) Slice() []complex64 {
 	result := make([]complex64, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *Complex64Set) Slice() []complex64 {
 }
 
 // Len returns the size of the set.
-func (s *Complex64Set) Len() int {
+func (s *Complex64) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *Complex64Set) IsEmpty() bool {
+func (s *Complex64) IsEmpty() bool {
 	return len(s.m) == 0
 }

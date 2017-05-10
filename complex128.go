@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// Complex128Set implements a set data structure that holds complex128s.
-type Complex128Set struct {
+// Complex128 implements a set data structure that holds complex128s.
+type Complex128 struct {
 	m map[complex128]struct{}
 }
 
 // NewComplex128 creates a set of complex128s initialized with given values.
-func NewComplex128(values ...complex128) *Complex128Set {
-	s := &Complex128Set{}
+func NewComplex128(values ...complex128) *Complex128 {
+	s := &Complex128{}
 	s.m = make(map[complex128]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *Complex128Set) Add(values ...complex128) {
+func (s *Complex128) Add(values ...complex128) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *Complex128Set) Add(values ...complex128) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *Complex128Set) Contains(values ...complex128) bool {
+func (s *Complex128) Contains(values ...complex128) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *Complex128Set) Contains(values ...complex128) bool {
 }
 
 // Remove removes given values from the set.
-func (s *Complex128Set) Remove(values ...complex128) {
+func (s *Complex128) Remove(values ...complex128) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *Complex128Set) Remove(values ...complex128) {
 }
 
 // Clear removes all values from the set.
-func (s *Complex128Set) Clear() {
+func (s *Complex128) Clear() {
 	s.m = make(map[complex128]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *Complex128Set) Visit(f func(value complex128) bool) bool {
+func (s *Complex128) Visit(f func(value complex128) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *Complex128Set) Visit(f func(value complex128) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *Complex128Set) Copy() *Complex128Set {
+func (s *Complex128) Copy() *Complex128 {
 	return NewComplex128(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *Complex128Set) Equals(other *Complex128Set) bool {
+func (s *Complex128) Equals(other *Complex128) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *Complex128Set) Equals(other *Complex128Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *Complex128Set) IsSubset(other *Complex128Set) bool {
+func (s *Complex128) IsSubset(other *Complex128) bool {
 	result := true
 	other.Visit(func(value complex128) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *Complex128Set) IsSubset(other *Complex128Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *Complex128Set) IsSuperset(other *Complex128Set) bool {
+func (s *Complex128) IsSuperset(other *Complex128) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *Complex128Set) Union(other *Complex128Set) *Complex128Set {
+func (s *Complex128) Union(other *Complex128) *Complex128 {
 	result := s.Copy()
 	other.Visit(func(value complex128) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *Complex128Set) Union(other *Complex128Set) *Complex128Set {
 }
 
 // Slice returns a slice of complex128s copied from the set contents.
-func (s *Complex128Set) Slice() []complex128 {
+func (s *Complex128) Slice() []complex128 {
 	result := make([]complex128, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *Complex128Set) Slice() []complex128 {
 }
 
 // Len returns the size of the set.
-func (s *Complex128Set) Len() int {
+func (s *Complex128) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *Complex128Set) IsEmpty() bool {
+func (s *Complex128) IsEmpty() bool {
 	return len(s.m) == 0
 }

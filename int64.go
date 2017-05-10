@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// Int64Set implements a set data structure that holds int64s.
-type Int64Set struct {
+// Int64 implements a set data structure that holds int64s.
+type Int64 struct {
 	m map[int64]struct{}
 }
 
 // NewInt64 creates a set of int64s initialized with given values.
-func NewInt64(values ...int64) *Int64Set {
-	s := &Int64Set{}
+func NewInt64(values ...int64) *Int64 {
+	s := &Int64{}
 	s.m = make(map[int64]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *Int64Set) Add(values ...int64) {
+func (s *Int64) Add(values ...int64) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *Int64Set) Add(values ...int64) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *Int64Set) Contains(values ...int64) bool {
+func (s *Int64) Contains(values ...int64) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *Int64Set) Contains(values ...int64) bool {
 }
 
 // Remove removes given values from the set.
-func (s *Int64Set) Remove(values ...int64) {
+func (s *Int64) Remove(values ...int64) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *Int64Set) Remove(values ...int64) {
 }
 
 // Clear removes all values from the set.
-func (s *Int64Set) Clear() {
+func (s *Int64) Clear() {
 	s.m = make(map[int64]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *Int64Set) Visit(f func(value int64) bool) bool {
+func (s *Int64) Visit(f func(value int64) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *Int64Set) Visit(f func(value int64) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *Int64Set) Copy() *Int64Set {
+func (s *Int64) Copy() *Int64 {
 	return NewInt64(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *Int64Set) Equals(other *Int64Set) bool {
+func (s *Int64) Equals(other *Int64) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *Int64Set) Equals(other *Int64Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *Int64Set) IsSubset(other *Int64Set) bool {
+func (s *Int64) IsSubset(other *Int64) bool {
 	result := true
 	other.Visit(func(value int64) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *Int64Set) IsSubset(other *Int64Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *Int64Set) IsSuperset(other *Int64Set) bool {
+func (s *Int64) IsSuperset(other *Int64) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *Int64Set) Union(other *Int64Set) *Int64Set {
+func (s *Int64) Union(other *Int64) *Int64 {
 	result := s.Copy()
 	other.Visit(func(value int64) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *Int64Set) Union(other *Int64Set) *Int64Set {
 }
 
 // Slice returns a slice of int64s copied from the set contents.
-func (s *Int64Set) Slice() []int64 {
+func (s *Int64) Slice() []int64 {
 	result := make([]int64, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *Int64Set) Slice() []int64 {
 }
 
 // Len returns the size of the set.
-func (s *Int64Set) Len() int {
+func (s *Int64) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *Int64Set) IsEmpty() bool {
+func (s *Int64) IsEmpty() bool {
 	return len(s.m) == 0
 }

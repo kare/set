@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// RuneSet implements a set data structure that holds runes.
-type RuneSet struct {
+// Rune implements a set data structure that holds runes.
+type Rune struct {
 	m map[rune]struct{}
 }
 
 // NewRune creates a set of runes initialized with given values.
-func NewRune(values ...rune) *RuneSet {
-	s := &RuneSet{}
+func NewRune(values ...rune) *Rune {
+	s := &Rune{}
 	s.m = make(map[rune]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *RuneSet) Add(values ...rune) {
+func (s *Rune) Add(values ...rune) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *RuneSet) Add(values ...rune) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *RuneSet) Contains(values ...rune) bool {
+func (s *Rune) Contains(values ...rune) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *RuneSet) Contains(values ...rune) bool {
 }
 
 // Remove removes given values from the set.
-func (s *RuneSet) Remove(values ...rune) {
+func (s *Rune) Remove(values ...rune) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *RuneSet) Remove(values ...rune) {
 }
 
 // Clear removes all values from the set.
-func (s *RuneSet) Clear() {
+func (s *Rune) Clear() {
 	s.m = make(map[rune]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *RuneSet) Visit(f func(value rune) bool) bool {
+func (s *Rune) Visit(f func(value rune) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *RuneSet) Visit(f func(value rune) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *RuneSet) Copy() *RuneSet {
+func (s *Rune) Copy() *Rune {
 	return NewRune(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *RuneSet) Equals(other *RuneSet) bool {
+func (s *Rune) Equals(other *Rune) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *RuneSet) Equals(other *RuneSet) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *RuneSet) IsSubset(other *RuneSet) bool {
+func (s *Rune) IsSubset(other *Rune) bool {
 	result := true
 	other.Visit(func(value rune) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *RuneSet) IsSubset(other *RuneSet) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *RuneSet) IsSuperset(other *RuneSet) bool {
+func (s *Rune) IsSuperset(other *Rune) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *RuneSet) Union(other *RuneSet) *RuneSet {
+func (s *Rune) Union(other *Rune) *Rune {
 	result := s.Copy()
 	other.Visit(func(value rune) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *RuneSet) Union(other *RuneSet) *RuneSet {
 }
 
 // Slice returns a slice of runes copied from the set contents.
-func (s *RuneSet) Slice() []rune {
+func (s *Rune) Slice() []rune {
 	result := make([]rune, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *RuneSet) Slice() []rune {
 }
 
 // Len returns the size of the set.
-func (s *RuneSet) Len() int {
+func (s *Rune) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *RuneSet) IsEmpty() bool {
+func (s *Rune) IsEmpty() bool {
 	return len(s.m) == 0
 }

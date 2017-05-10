@@ -2,21 +2,21 @@
 
 package set // import "kkn.fi/set"
 
-// Uint32Set implements a set data structure that holds uint32s.
-type Uint32Set struct {
+// Uint32 implements a set data structure that holds uint32s.
+type Uint32 struct {
 	m map[uint32]struct{}
 }
 
 // NewUint32 creates a set of uint32s initialized with given values.
-func NewUint32(values ...uint32) *Uint32Set {
-	s := &Uint32Set{}
+func NewUint32(values ...uint32) *Uint32 {
+	s := &Uint32{}
 	s.m = make(map[uint32]struct{})
 	s.Add(values...)
 	return s
 }
 
 // Add adds given values to the set.
-func (s *Uint32Set) Add(values ...uint32) {
+func (s *Uint32) Add(values ...uint32) {
 	if len(values) == 0 {
 		return
 	}
@@ -26,7 +26,7 @@ func (s *Uint32Set) Add(values ...uint32) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s *Uint32Set) Contains(values ...uint32) bool {
+func (s *Uint32) Contains(values ...uint32) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ func (s *Uint32Set) Contains(values ...uint32) bool {
 }
 
 // Remove removes given values from the set.
-func (s *Uint32Set) Remove(values ...uint32) {
+func (s *Uint32) Remove(values ...uint32) {
 	if len(values) == 0 {
 		return
 	}
@@ -49,14 +49,14 @@ func (s *Uint32Set) Remove(values ...uint32) {
 }
 
 // Clear removes all values from the set.
-func (s *Uint32Set) Clear() {
+func (s *Uint32) Clear() {
 	s.m = make(map[uint32]struct{})
 }
 
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s *Uint32Set) Visit(f func(value uint32) bool) bool {
+func (s *Uint32) Visit(f func(value uint32) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s *Uint32Set) Visit(f func(value uint32) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s *Uint32Set) Copy() *Uint32Set {
+func (s *Uint32) Copy() *Uint32 {
 	return NewUint32(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s *Uint32Set) Equals(other *Uint32Set) bool {
+func (s *Uint32) Equals(other *Uint32) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s *Uint32Set) Equals(other *Uint32Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s *Uint32Set) IsSubset(other *Uint32Set) bool {
+func (s *Uint32) IsSubset(other *Uint32) bool {
 	result := true
 	other.Visit(func(value uint32) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s *Uint32Set) IsSubset(other *Uint32Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s *Uint32Set) IsSuperset(other *Uint32Set) bool {
+func (s *Uint32) IsSuperset(other *Uint32) bool {
 	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s *Uint32Set) Union(other *Uint32Set) *Uint32Set {
+func (s *Uint32) Union(other *Uint32) *Uint32 {
 	result := s.Copy()
 	other.Visit(func(value uint32) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s *Uint32Set) Union(other *Uint32Set) *Uint32Set {
 }
 
 // Slice returns a slice of uint32s copied from the set contents.
-func (s *Uint32Set) Slice() []uint32 {
+func (s *Uint32) Slice() []uint32 {
 	result := make([]uint32, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s *Uint32Set) Slice() []uint32 {
 }
 
 // Len returns the size of the set.
-func (s *Uint32Set) Len() int {
+func (s *Uint32) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s *Uint32Set) IsEmpty() bool {
+func (s *Uint32) IsEmpty() bool {
 	return len(s.m) == 0
 }
