@@ -26,7 +26,7 @@ func (s *{{.TypeName}}) Add(values ...{{.Type}}) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s {{.TypeName}}) Contains(values ...{{.Type}}) bool {
+func (s *{{.TypeName}}) Contains(values ...{{.Type}}) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *{{.TypeName}}) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s {{.TypeName}}) Visit(f func(value {{.Type}}) bool) bool {
+func (s *{{.TypeName}}) Visit(f func(value {{.Type}}) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s {{.TypeName}}) Visit(f func(value {{.Type}}) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s {{.TypeName}}) Copy() *{{.TypeName}} {
+func (s *{{.TypeName}}) Copy() *{{.TypeName}} {
 	return New{{.ShortTypeName}}(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s {{.TypeName}}) Equals(other *{{.TypeName}}) bool {
+func (s *{{.TypeName}}) Equals(other *{{.TypeName}}) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s {{.TypeName}}) Equals(other *{{.TypeName}}) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s {{.TypeName}}) IsSubset(other *{{.TypeName}}) bool {
+func (s *{{.TypeName}}) IsSubset(other *{{.TypeName}}) bool {
 	result := true
 	other.Visit(func(value {{.Type}}) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s {{.TypeName}}) IsSubset(other *{{.TypeName}}) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s {{.TypeName}}) IsSuperset(other *{{.TypeName}}) bool {
-	return other.IsSubset(&s)
+func (s *{{.TypeName}}) IsSuperset(other *{{.TypeName}}) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s {{.TypeName}}) Union(other *{{.TypeName}}) *{{.TypeName}} {
+func (s *{{.TypeName}}) Union(other *{{.TypeName}}) *{{.TypeName}} {
 	result := s.Copy()
 	other.Visit(func(value {{.Type}}) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s {{.TypeName}}) Union(other *{{.TypeName}}) *{{.TypeName}} {
 }
 
 // Slice returns a slice of {{.Type}}s copied from the set contents.
-func (s {{.TypeName}}) Slice() []{{.Type}} {
+func (s *{{.TypeName}}) Slice() []{{.Type}} {
 	result := make([]{{.Type}}, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s {{.TypeName}}) Slice() []{{.Type}} {
 }
 
 // Len returns the size of the set.
-func (s {{.TypeName}}) Len() int {
+func (s *{{.TypeName}}) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s {{.TypeName}}) IsEmpty() bool {
+func (s *{{.TypeName}}) IsEmpty() bool {
 	return len(s.m) == 0
 }

@@ -26,7 +26,7 @@ func (s *Uint32Set) Add(values ...uint32) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s Uint32Set) Contains(values ...uint32) bool {
+func (s *Uint32Set) Contains(values ...uint32) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *Uint32Set) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s Uint32Set) Visit(f func(value uint32) bool) bool {
+func (s *Uint32Set) Visit(f func(value uint32) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s Uint32Set) Visit(f func(value uint32) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s Uint32Set) Copy() *Uint32Set {
+func (s *Uint32Set) Copy() *Uint32Set {
 	return NewUint32(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s Uint32Set) Equals(other *Uint32Set) bool {
+func (s *Uint32Set) Equals(other *Uint32Set) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s Uint32Set) Equals(other *Uint32Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s Uint32Set) IsSubset(other *Uint32Set) bool {
+func (s *Uint32Set) IsSubset(other *Uint32Set) bool {
 	result := true
 	other.Visit(func(value uint32) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s Uint32Set) IsSubset(other *Uint32Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s Uint32Set) IsSuperset(other *Uint32Set) bool {
-	return other.IsSubset(&s)
+func (s *Uint32Set) IsSuperset(other *Uint32Set) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s Uint32Set) Union(other *Uint32Set) *Uint32Set {
+func (s *Uint32Set) Union(other *Uint32Set) *Uint32Set {
 	result := s.Copy()
 	other.Visit(func(value uint32) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s Uint32Set) Union(other *Uint32Set) *Uint32Set {
 }
 
 // Slice returns a slice of uint32s copied from the set contents.
-func (s Uint32Set) Slice() []uint32 {
+func (s *Uint32Set) Slice() []uint32 {
 	result := make([]uint32, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s Uint32Set) Slice() []uint32 {
 }
 
 // Len returns the size of the set.
-func (s Uint32Set) Len() int {
+func (s *Uint32Set) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s Uint32Set) IsEmpty() bool {
+func (s *Uint32Set) IsEmpty() bool {
 	return len(s.m) == 0
 }

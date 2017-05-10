@@ -26,7 +26,7 @@ func (s *Complex128Set) Add(values ...complex128) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s Complex128Set) Contains(values ...complex128) bool {
+func (s *Complex128Set) Contains(values ...complex128) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *Complex128Set) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s Complex128Set) Visit(f func(value complex128) bool) bool {
+func (s *Complex128Set) Visit(f func(value complex128) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s Complex128Set) Visit(f func(value complex128) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s Complex128Set) Copy() *Complex128Set {
+func (s *Complex128Set) Copy() *Complex128Set {
 	return NewComplex128(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s Complex128Set) Equals(other *Complex128Set) bool {
+func (s *Complex128Set) Equals(other *Complex128Set) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s Complex128Set) Equals(other *Complex128Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s Complex128Set) IsSubset(other *Complex128Set) bool {
+func (s *Complex128Set) IsSubset(other *Complex128Set) bool {
 	result := true
 	other.Visit(func(value complex128) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s Complex128Set) IsSubset(other *Complex128Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s Complex128Set) IsSuperset(other *Complex128Set) bool {
-	return other.IsSubset(&s)
+func (s *Complex128Set) IsSuperset(other *Complex128Set) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s Complex128Set) Union(other *Complex128Set) *Complex128Set {
+func (s *Complex128Set) Union(other *Complex128Set) *Complex128Set {
 	result := s.Copy()
 	other.Visit(func(value complex128) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s Complex128Set) Union(other *Complex128Set) *Complex128Set {
 }
 
 // Slice returns a slice of complex128s copied from the set contents.
-func (s Complex128Set) Slice() []complex128 {
+func (s *Complex128Set) Slice() []complex128 {
 	result := make([]complex128, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s Complex128Set) Slice() []complex128 {
 }
 
 // Len returns the size of the set.
-func (s Complex128Set) Len() int {
+func (s *Complex128Set) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s Complex128Set) IsEmpty() bool {
+func (s *Complex128Set) IsEmpty() bool {
 	return len(s.m) == 0
 }

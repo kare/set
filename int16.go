@@ -26,7 +26,7 @@ func (s *Int16Set) Add(values ...int16) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s Int16Set) Contains(values ...int16) bool {
+func (s *Int16Set) Contains(values ...int16) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *Int16Set) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s Int16Set) Visit(f func(value int16) bool) bool {
+func (s *Int16Set) Visit(f func(value int16) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s Int16Set) Visit(f func(value int16) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s Int16Set) Copy() *Int16Set {
+func (s *Int16Set) Copy() *Int16Set {
 	return NewInt16(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s Int16Set) Equals(other *Int16Set) bool {
+func (s *Int16Set) Equals(other *Int16Set) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s Int16Set) Equals(other *Int16Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s Int16Set) IsSubset(other *Int16Set) bool {
+func (s *Int16Set) IsSubset(other *Int16Set) bool {
 	result := true
 	other.Visit(func(value int16) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s Int16Set) IsSubset(other *Int16Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s Int16Set) IsSuperset(other *Int16Set) bool {
-	return other.IsSubset(&s)
+func (s *Int16Set) IsSuperset(other *Int16Set) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s Int16Set) Union(other *Int16Set) *Int16Set {
+func (s *Int16Set) Union(other *Int16Set) *Int16Set {
 	result := s.Copy()
 	other.Visit(func(value int16) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s Int16Set) Union(other *Int16Set) *Int16Set {
 }
 
 // Slice returns a slice of int16s copied from the set contents.
-func (s Int16Set) Slice() []int16 {
+func (s *Int16Set) Slice() []int16 {
 	result := make([]int16, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s Int16Set) Slice() []int16 {
 }
 
 // Len returns the size of the set.
-func (s Int16Set) Len() int {
+func (s *Int16Set) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s Int16Set) IsEmpty() bool {
+func (s *Int16Set) IsEmpty() bool {
 	return len(s.m) == 0
 }

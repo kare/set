@@ -26,7 +26,7 @@ func (s *UintSet) Add(values ...uint) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s UintSet) Contains(values ...uint) bool {
+func (s *UintSet) Contains(values ...uint) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *UintSet) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s UintSet) Visit(f func(value uint) bool) bool {
+func (s *UintSet) Visit(f func(value uint) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s UintSet) Visit(f func(value uint) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s UintSet) Copy() *UintSet {
+func (s *UintSet) Copy() *UintSet {
 	return NewUint(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s UintSet) Equals(other *UintSet) bool {
+func (s *UintSet) Equals(other *UintSet) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s UintSet) Equals(other *UintSet) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s UintSet) IsSubset(other *UintSet) bool {
+func (s *UintSet) IsSubset(other *UintSet) bool {
 	result := true
 	other.Visit(func(value uint) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s UintSet) IsSubset(other *UintSet) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s UintSet) IsSuperset(other *UintSet) bool {
-	return other.IsSubset(&s)
+func (s *UintSet) IsSuperset(other *UintSet) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s UintSet) Union(other *UintSet) *UintSet {
+func (s *UintSet) Union(other *UintSet) *UintSet {
 	result := s.Copy()
 	other.Visit(func(value uint) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s UintSet) Union(other *UintSet) *UintSet {
 }
 
 // Slice returns a slice of uints copied from the set contents.
-func (s UintSet) Slice() []uint {
+func (s *UintSet) Slice() []uint {
 	result := make([]uint, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s UintSet) Slice() []uint {
 }
 
 // Len returns the size of the set.
-func (s UintSet) Len() int {
+func (s *UintSet) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s UintSet) IsEmpty() bool {
+func (s *UintSet) IsEmpty() bool {
 	return len(s.m) == 0
 }

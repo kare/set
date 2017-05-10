@@ -26,7 +26,7 @@ func (s *ByteSet) Add(values ...byte) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s ByteSet) Contains(values ...byte) bool {
+func (s *ByteSet) Contains(values ...byte) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *ByteSet) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s ByteSet) Visit(f func(value byte) bool) bool {
+func (s *ByteSet) Visit(f func(value byte) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s ByteSet) Visit(f func(value byte) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s ByteSet) Copy() *ByteSet {
+func (s *ByteSet) Copy() *ByteSet {
 	return NewByte(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s ByteSet) Equals(other *ByteSet) bool {
+func (s *ByteSet) Equals(other *ByteSet) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s ByteSet) Equals(other *ByteSet) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s ByteSet) IsSubset(other *ByteSet) bool {
+func (s *ByteSet) IsSubset(other *ByteSet) bool {
 	result := true
 	other.Visit(func(value byte) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s ByteSet) IsSubset(other *ByteSet) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s ByteSet) IsSuperset(other *ByteSet) bool {
-	return other.IsSubset(&s)
+func (s *ByteSet) IsSuperset(other *ByteSet) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s ByteSet) Union(other *ByteSet) *ByteSet {
+func (s *ByteSet) Union(other *ByteSet) *ByteSet {
 	result := s.Copy()
 	other.Visit(func(value byte) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s ByteSet) Union(other *ByteSet) *ByteSet {
 }
 
 // Slice returns a slice of bytes copied from the set contents.
-func (s ByteSet) Slice() []byte {
+func (s *ByteSet) Slice() []byte {
 	result := make([]byte, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s ByteSet) Slice() []byte {
 }
 
 // Len returns the size of the set.
-func (s ByteSet) Len() int {
+func (s *ByteSet) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s ByteSet) IsEmpty() bool {
+func (s *ByteSet) IsEmpty() bool {
 	return len(s.m) == 0
 }

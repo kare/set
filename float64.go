@@ -26,7 +26,7 @@ func (s *Float64Set) Add(values ...float64) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s Float64Set) Contains(values ...float64) bool {
+func (s *Float64Set) Contains(values ...float64) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *Float64Set) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s Float64Set) Visit(f func(value float64) bool) bool {
+func (s *Float64Set) Visit(f func(value float64) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s Float64Set) Visit(f func(value float64) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s Float64Set) Copy() *Float64Set {
+func (s *Float64Set) Copy() *Float64Set {
 	return NewFloat64(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s Float64Set) Equals(other *Float64Set) bool {
+func (s *Float64Set) Equals(other *Float64Set) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s Float64Set) Equals(other *Float64Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s Float64Set) IsSubset(other *Float64Set) bool {
+func (s *Float64Set) IsSubset(other *Float64Set) bool {
 	result := true
 	other.Visit(func(value float64) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s Float64Set) IsSubset(other *Float64Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s Float64Set) IsSuperset(other *Float64Set) bool {
-	return other.IsSubset(&s)
+func (s *Float64Set) IsSuperset(other *Float64Set) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s Float64Set) Union(other *Float64Set) *Float64Set {
+func (s *Float64Set) Union(other *Float64Set) *Float64Set {
 	result := s.Copy()
 	other.Visit(func(value float64) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s Float64Set) Union(other *Float64Set) *Float64Set {
 }
 
 // Slice returns a slice of float64s copied from the set contents.
-func (s Float64Set) Slice() []float64 {
+func (s *Float64Set) Slice() []float64 {
 	result := make([]float64, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s Float64Set) Slice() []float64 {
 }
 
 // Len returns the size of the set.
-func (s Float64Set) Len() int {
+func (s *Float64Set) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s Float64Set) IsEmpty() bool {
+func (s *Float64Set) IsEmpty() bool {
 	return len(s.m) == 0
 }

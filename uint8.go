@@ -26,7 +26,7 @@ func (s *Uint8Set) Add(values ...uint8) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s Uint8Set) Contains(values ...uint8) bool {
+func (s *Uint8Set) Contains(values ...uint8) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *Uint8Set) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s Uint8Set) Visit(f func(value uint8) bool) bool {
+func (s *Uint8Set) Visit(f func(value uint8) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s Uint8Set) Visit(f func(value uint8) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s Uint8Set) Copy() *Uint8Set {
+func (s *Uint8Set) Copy() *Uint8Set {
 	return NewUint8(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s Uint8Set) Equals(other *Uint8Set) bool {
+func (s *Uint8Set) Equals(other *Uint8Set) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s Uint8Set) Equals(other *Uint8Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s Uint8Set) IsSubset(other *Uint8Set) bool {
+func (s *Uint8Set) IsSubset(other *Uint8Set) bool {
 	result := true
 	other.Visit(func(value uint8) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s Uint8Set) IsSubset(other *Uint8Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s Uint8Set) IsSuperset(other *Uint8Set) bool {
-	return other.IsSubset(&s)
+func (s *Uint8Set) IsSuperset(other *Uint8Set) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s Uint8Set) Union(other *Uint8Set) *Uint8Set {
+func (s *Uint8Set) Union(other *Uint8Set) *Uint8Set {
 	result := s.Copy()
 	other.Visit(func(value uint8) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s Uint8Set) Union(other *Uint8Set) *Uint8Set {
 }
 
 // Slice returns a slice of uint8s copied from the set contents.
-func (s Uint8Set) Slice() []uint8 {
+func (s *Uint8Set) Slice() []uint8 {
 	result := make([]uint8, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s Uint8Set) Slice() []uint8 {
 }
 
 // Len returns the size of the set.
-func (s Uint8Set) Len() int {
+func (s *Uint8Set) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s Uint8Set) IsEmpty() bool {
+func (s *Uint8Set) IsEmpty() bool {
 	return len(s.m) == 0
 }

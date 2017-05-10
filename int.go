@@ -26,7 +26,7 @@ func (s *IntSet) Add(values ...int) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s IntSet) Contains(values ...int) bool {
+func (s *IntSet) Contains(values ...int) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *IntSet) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s IntSet) Visit(f func(value int) bool) bool {
+func (s *IntSet) Visit(f func(value int) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s IntSet) Visit(f func(value int) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s IntSet) Copy() *IntSet {
+func (s *IntSet) Copy() *IntSet {
 	return NewInt(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s IntSet) Equals(other *IntSet) bool {
+func (s *IntSet) Equals(other *IntSet) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s IntSet) Equals(other *IntSet) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s IntSet) IsSubset(other *IntSet) bool {
+func (s *IntSet) IsSubset(other *IntSet) bool {
 	result := true
 	other.Visit(func(value int) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s IntSet) IsSubset(other *IntSet) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s IntSet) IsSuperset(other *IntSet) bool {
-	return other.IsSubset(&s)
+func (s *IntSet) IsSuperset(other *IntSet) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s IntSet) Union(other *IntSet) *IntSet {
+func (s *IntSet) Union(other *IntSet) *IntSet {
 	result := s.Copy()
 	other.Visit(func(value int) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s IntSet) Union(other *IntSet) *IntSet {
 }
 
 // Slice returns a slice of ints copied from the set contents.
-func (s IntSet) Slice() []int {
+func (s *IntSet) Slice() []int {
 	result := make([]int, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s IntSet) Slice() []int {
 }
 
 // Len returns the size of the set.
-func (s IntSet) Len() int {
+func (s *IntSet) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s IntSet) IsEmpty() bool {
+func (s *IntSet) IsEmpty() bool {
 	return len(s.m) == 0
 }

@@ -26,7 +26,7 @@ func (s *StringSet) Add(values ...string) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s StringSet) Contains(values ...string) bool {
+func (s *StringSet) Contains(values ...string) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *StringSet) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s StringSet) Visit(f func(value string) bool) bool {
+func (s *StringSet) Visit(f func(value string) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s StringSet) Visit(f func(value string) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s StringSet) Copy() *StringSet {
+func (s *StringSet) Copy() *StringSet {
 	return NewString(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s StringSet) Equals(other *StringSet) bool {
+func (s *StringSet) Equals(other *StringSet) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s StringSet) Equals(other *StringSet) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s StringSet) IsSubset(other *StringSet) bool {
+func (s *StringSet) IsSubset(other *StringSet) bool {
 	result := true
 	other.Visit(func(value string) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s StringSet) IsSubset(other *StringSet) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s StringSet) IsSuperset(other *StringSet) bool {
-	return other.IsSubset(&s)
+func (s *StringSet) IsSuperset(other *StringSet) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s StringSet) Union(other *StringSet) *StringSet {
+func (s *StringSet) Union(other *StringSet) *StringSet {
 	result := s.Copy()
 	other.Visit(func(value string) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s StringSet) Union(other *StringSet) *StringSet {
 }
 
 // Slice returns a slice of strings copied from the set contents.
-func (s StringSet) Slice() []string {
+func (s *StringSet) Slice() []string {
 	result := make([]string, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s StringSet) Slice() []string {
 }
 
 // Len returns the size of the set.
-func (s StringSet) Len() int {
+func (s *StringSet) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s StringSet) IsEmpty() bool {
+func (s *StringSet) IsEmpty() bool {
 	return len(s.m) == 0
 }

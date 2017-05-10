@@ -26,7 +26,7 @@ func (s *Uint16Set) Add(values ...uint16) {
 }
 
 // Contains returns true if set holds all values and false otherwise.
-func (s Uint16Set) Contains(values ...uint16) bool {
+func (s *Uint16Set) Contains(values ...uint16) bool {
 	if len(values) == 0 {
 		return false
 	}
@@ -56,7 +56,7 @@ func (s *Uint16Set) Clear() {
 // Visit iterates through the set and visits all values with function f.
 // Iteration will stop if function f returns false.
 // Visit will return false when set is visited partially.
-func (s Uint16Set) Visit(f func(value uint16) bool) bool {
+func (s *Uint16Set) Visit(f func(value uint16) bool) bool {
 	for v := range s.m {
 		if !f(v) {
 			return false
@@ -66,12 +66,12 @@ func (s Uint16Set) Visit(f func(value uint16) bool) bool {
 }
 
 // Copy returns a copy of the set.
-func (s Uint16Set) Copy() *Uint16Set {
+func (s *Uint16Set) Copy() *Uint16Set {
 	return NewUint16(s.Slice()...)
 }
 
 // Equals returns true if both sets are equal, but false otherwise.
-func (s Uint16Set) Equals(other *Uint16Set) bool {
+func (s *Uint16Set) Equals(other *Uint16Set) bool {
 	if s.Len() != other.Len() {
 		return false
 	}
@@ -84,7 +84,7 @@ func (s Uint16Set) Equals(other *Uint16Set) bool {
 }
 
 // IsSubset returns true if given set is a subset of s.
-func (s Uint16Set) IsSubset(other *Uint16Set) bool {
+func (s *Uint16Set) IsSubset(other *Uint16Set) bool {
 	result := true
 	other.Visit(func(value uint16) bool {
 		_, result = s.m[value]
@@ -94,12 +94,12 @@ func (s Uint16Set) IsSubset(other *Uint16Set) bool {
 }
 
 // IsSuperset returns true if given set is a superset of s.
-func (s Uint16Set) IsSuperset(other *Uint16Set) bool {
-	return other.IsSubset(&s)
+func (s *Uint16Set) IsSuperset(other *Uint16Set) bool {
+	return other.IsSubset(s)
 }
 
 // Union returns a new union set of s and other.
-func (s Uint16Set) Union(other *Uint16Set) *Uint16Set {
+func (s *Uint16Set) Union(other *Uint16Set) *Uint16Set {
 	result := s.Copy()
 	other.Visit(func(value uint16) bool {
 		result.Add(value)
@@ -109,7 +109,7 @@ func (s Uint16Set) Union(other *Uint16Set) *Uint16Set {
 }
 
 // Slice returns a slice of uint16s copied from the set contents.
-func (s Uint16Set) Slice() []uint16 {
+func (s *Uint16Set) Slice() []uint16 {
 	result := make([]uint16, 0, len(s.m))
 	for value := range s.m {
 		result = append(result, value)
@@ -118,11 +118,11 @@ func (s Uint16Set) Slice() []uint16 {
 }
 
 // Len returns the size of the set.
-func (s Uint16Set) Len() int {
+func (s *Uint16Set) Len() int {
 	return len(s.m)
 }
 
 // IsEmpty return true is set is empty, false otherwise.
-func (s Uint16Set) IsEmpty() bool {
+func (s *Uint16Set) IsEmpty() bool {
 	return len(s.m) == 0
 }
