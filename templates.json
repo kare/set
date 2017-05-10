@@ -2,86 +2,86 @@
     {
         "ShortTypeName": "String",
         "Type": "string",
-        "TypeName": "StringSet"
+        "TypeName": "String"
     },
     {
         "ShortTypeName": "Int",
         "Type": "int",
-        "TypeName": "IntSet"
+        "TypeName": "Int"
     },
     {
         "ShortTypeName": "Uint",
         "Type": "uint",
-        "TypeName": "UintSet"
+        "TypeName": "Uint"
     },
     {
         "ShortTypeName": "Uint8",
         "Type": "uint8",
-        "TypeName": "Uint8Set"
+        "TypeName": "Uint8"
     },
     {
         "ShortTypeName": "Uint16",
         "Type": "uint16",
-        "TypeName": "Uint16Set"
+        "TypeName": "Uint16"
     },
     {
         "ShortTypeName": "Uint32",
         "Type": "uint32",
-        "TypeName": "Uint32Set"
+        "TypeName": "Uint32"
     },
     {
         "ShortTypeName": "Uint64",
         "Type": "uint64",
-        "TypeName": "Uint64Set"
+        "TypeName": "Uint64"
     },
     {
         "ShortTypeName": "Int8",
         "Type": "int8",
-        "TypeName": "Int8Set"
+        "TypeName": "Int8"
     },
     {
         "ShortTypeName": "Int16",
         "Type": "int16",
-        "TypeName": "Int16Set"
+        "TypeName": "Int16"
     },
     {
         "ShortTypeName": "Int32",
         "Type": "int32",
-        "TypeName": "Int32Set"
+        "TypeName": "Int32"
     },
     {
         "ShortTypeName": "Int64",
         "Type": "int64",
-        "TypeName": "Int64Set"
+        "TypeName": "Int64"
     },
     {
         "ShortTypeName": "Float32",
         "Type": "float32",
-        "TypeName": "Float32Set"
+        "TypeName": "Float32"
     },
     {
         "ShortTypeName": "Float64",
         "Type": "float64",
-        "TypeName": "Float64Set"
+        "TypeName": "Float64"
     },
     {
         "ShortTypeName": "Complex64",
         "Type": "complex64",
-        "TypeName": "Complex64Set"
+        "TypeName": "Complex64"
     },
     {
         "ShortTypeName": "Complex128",
         "Type": "complex128",
-        "TypeName": "Complex128Set"
+        "TypeName": "Complex128"
     },
     {
         "ShortTypeName": "Byte",
         "Type": "byte",
-        "TypeName": "ByteSet"
+        "TypeName": "Byte"
     },
     {
         "ShortTypeName": "Rune",
         "Type": "rune",
-        "TypeName": "RuneSet"
+        "TypeName": "Rune"
     }
 ]
